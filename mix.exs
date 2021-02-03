@@ -1,9 +1,9 @@
-defmodule Master.MixProject do
+defmodule Mastery.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :master,
+      app: :mastery,
       version: "0.1.0",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
@@ -15,7 +15,7 @@ defmodule Master.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {Master.Application, []}
+      mod: {Mastery.Application, []}
     ]
   end
 

@@ -1,6 +1,6 @@
-defmodule Master do
+defmodule Mastery do
   @moduledoc """
-  Documentation for `Master`.
+  Documentation for `Mastery`.
   """
 
   @doc """
@@ -8,7 +8,7 @@ defmodule Master do
 
   ## Examples
 
-      iex> Master.hello()
+      iex> Mastery.hello()
       :world
 
   """
