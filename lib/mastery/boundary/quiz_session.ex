@@ -20,12 +20,12 @@ defmodule Mastery.Boundary.QuizSession do
 
   def take_quiz(quiz, email) do
     DynamicSupervisor.start_child(
-      Mastery.Supervisot.QuizSession,
+      Mastery.Supervisor.QuizSession,
       {__MODULE__, {quiz, email}}
     )
   end
 
-  defp via({_title, _email} = name) do
+  def via({_title, _email} = name) do
     {
       :via,
       Registry,

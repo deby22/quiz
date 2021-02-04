@@ -1,18 +1,10 @@
 defmodule Mastery.Application do
-  # See https://hexdocs.pm/elixir/Application.html
-  # for more information on OTP Applications
-  @moduledoc false
-
   use Application
 
-  @impl true
   def start(_type, _args) do
     children = [
       {Mastery.Boundary.QuizManager, [name: Mastery.Boundary.QuizManager]},
-      {
-        Registry,
-        [name: Mastery.Registry.QuizSession, keys: :unique]
-      },
+      {Registry, [name: Mastery.Registry.QuizSession, keys: :unique]},
       {DynamicSupervisor, [name: Mastery.Supervisor.QuizSession, strategy: :one_for_one]}
     ]
 
