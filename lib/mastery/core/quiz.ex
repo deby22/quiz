@@ -37,6 +37,8 @@ defmodule Mastery.Core.Quiz do
     }
   end
 
+  defp reset_template_cycle(quiz), do: quiz
+
   defp add_to_list_or_nil(nil, template), do: [template]
   defp add_to_list_or_nil(templates, template), do: [template | templates]
 
