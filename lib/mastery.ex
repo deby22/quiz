@@ -1,4 +1,5 @@
 defmodule Mastery do
+  @persistence_fn Application.get_env(:mastery, :persistence_fn)
   alias Mastery.Boundary.{QuizSession, QuizManager, Proctor}
   alias Mastery.Boundary.{TemplateValidator, QuizValidator}
   alias Mastery.Core.Quiz
@@ -39,8 +40,12 @@ defmodule Mastery do
     # GenServer.call(QuizSession.via(session), :select_question)
   end
 
-  def answer_question(session, answer) do
-    QuizSession.answer_question(session, answer)
-    # GenServer.call(session, {:answer_question, answer})
+  # def answer_question(session, answer) do
+  #   QuizSession.answer_question(session, answer)
+  #   # GenServer.call(session, {:answer_question, answer})
+  # end
+  #  Czyli miałem rację. Przy zmianie wchodzimy w QuizSession zamiast GenServer
+  def answer_question(name, answer, persistence_fn \\ @persistence_fn) do
+    QuizSession.answer_question(name, answer, persistence_fn)
   end
 end
