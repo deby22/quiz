@@ -6,15 +6,20 @@ defmodule Mastery.Boundary.QuizManager do
     {:ok, quizzes}
   end
 
+  def init(_quizzes), do: {:error, "quizzes must be a map"}
+
   def start_link(options \\ []) do
     GenServer.start_link(__MODULE__, %{}, options)
   end
 
-  def init(_quizzes), do: {:error, "quizzes must be a map"}
-
   def handle_call({:build_quiz, quiz_fields}, _from, quizzes) do
     quiz = Quiz.new(quiz_fields)
     new_quizzes = Map.put(quizzes, quiz.title, quiz)
+    {:reply, :ok, new_quizzes}
+  end
+
+  def handle_call({:remove_quiz, quiz_title}, _from, quizzes) do
+    new_quizzes = Map.delete(quizzes, quiz_title)
     {:reply, :ok, new_quizzes}
   end
 
@@ -23,8 +28,6 @@ defmodule Mastery.Boundary.QuizManager do
         _from,
         quizzes
       ) do
-    # nie rozmawiamy tu na różnych poziomach abstrakcji?
-    # Map.update i Quiz.add_tempalte
     new_quizzes =
       Map.update!(quizzes, quiz_title, fn quiz ->
         Quiz.add_template(quiz, template_fields)
@@ -33,8 +36,8 @@ defmodule Mastery.Boundary.QuizManager do
     {:reply, :ok, new_quizzes}
   end
 
-  def handle_call({:lookup_quiz_by_title, quiz_title}, _from, quizzes) do
-    {:reply, quizzes[quiz_title], quizzes}
+  def remove_quiz(manager \\ __MODULE__, quiz_title) do
+    GenServer.call(manager, {:remove_quiz, quiz_title})
   end
 
   def build_quiz(manager \\ __MODULE__, quiz_fields) do
@@ -47,5 +50,9 @@ defmodule Mastery.Boundary.QuizManager do
 
   def lookup_quiz_by_title(manager \\ __MODULE__, quiz_title) do
     GenServer.call(manager, {:lookup_quiz_by_title, quiz_title})
+  end
+
+  def handle_call({:lookup_quiz_by_title, quiz_title}, _from, quizzes) do
+    {:reply, quizzes[quiz_title], quizzes}
   end
 end
