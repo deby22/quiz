@@ -23,6 +23,8 @@ defmodule Mastery.MixProject do
   defp deps do
     [
       # {:dep_from_hexpm, "~> 0.3.0"},
+      {:ecto_sql, "~> 3.1"},
+      {:postgrex, "~> 0.14.1"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
       {:mastery_persistence, path: "mastery_persistence"}
     ]
