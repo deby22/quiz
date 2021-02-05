@@ -7,5 +7,4 @@ config :mastery_persistence, MasteryPersistence.Repo,
   # hostname: "localhost",
   database: "mastery_dev",
   hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox,
-  show_sensitive_data_on_connection_error: true,
+  pool: Ecto.Adapters.SQL.Sandbox
